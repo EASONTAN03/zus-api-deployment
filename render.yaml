@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: zus-coffee-chatbot
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: PINECONE_API_KEY
+        sync: false
+    healthCheckPath: /api/v1/health

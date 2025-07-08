@@ -1,0 +1,49 @@
+{
+  "models": {
+    "embedding_model": {
+      "name": "text-embedding-3-small"
+    },
+    "chat_model": {
+      "name": "gpt-4o",
+      "provider": "openai",
+      "temperature": 0.2,
+      "max_tokens": 2000
+    },
+    "llm_model": {
+      "name": "gpt-4o",
+      "provider": "openai",
+      "temperature": 0
+    }
+  },
+  "pinecone": {
+    "index_name": "zus-products",
+    "dimension": 1536,
+    "metric": "cosine",
+    "top_k": 3,
+    "cloud": "aws",
+    "region": "us-east-1"
+  },
+  "filepaths": {
+    "products": {
+      "csv": "data/zus_products.csv"
+    },
+    "outlets": {
+      "csv": "data/zus_outlets_final.csv",
+      "sql": "data/zus_outlets.sql",
+      "db": "data/zus_outlets.db"
+    }
+  },
+  "auth": {
+    "secret_key": "a-string-secret-at-least-256-bits-long",
+    "algorithm": "HS256"
+  },
+  "rate_limit": {
+    "auth_rate_limit": 5,
+    "auth_time_window_seconds": 60,
+    "global_rate_limit": 3,
+    "global_time_window_seconds": 60
+  },
+  "chat_memory": {
+    "window_size": 5
+  }
+}
