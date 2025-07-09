@@ -11,16 +11,24 @@ This repository contains the production-ready deployment setup for the ZUS Coffe
 - **API Docs:** OpenAPI/Swagger at `/docs`
 
 ## 📦 Directory Structure
+### ZUS API Deployment Repository
+### ZUS API Deployment Repository
 ```
 zus-api-deployment/
-├── app/                # FastAPI app and source code
-├── data/               # Data files (CSV, SQL, DB)
-├── Dockerfile          # Production Docker build
-├── render.yaml         # Render deployment config
-├── requirements.txt    # Python dependencies
-├── .dockerignore       # Docker build exclusions
-├── .gitignore          # Git exclusions
-└── README.md           # This file
+├── app/
+│   ├── app.py              # FastAPI application entry point
+│   ├── src/
+│   │   ├── vectorstore.py  # Pinecone vector search logic
+│   │   ├── text2SQL.py     # SQLite database operations
+│   │   ├── utils.py        # Configuration and utilities
+│   │   ├── openai_chain.py # LLM prompt chains
+│   │   ├── rate_limit.py   # Rate limiting and auth
+│   │   └── router.py       # API route handlers
+│   └── data/               # Data files (CSV, SQL, DB)
+├── Dockerfile              # Production containerization
+├── render.yaml             # Render deployment configuration
+├── requirements.txt        # Python dependencies
+└── README.md              # The top-level README for developers using this project.
 ```
 
 ## 🌐 Quick Start (Local)
@@ -39,8 +47,6 @@ zus-api-deployment/
    ```env
    OPENAI_API_KEY=your-openai-key
    PINECONE_API_KEY=your-pinecone-key
-   PINECONE_ENVIRONMENT=your-pinecone-environment
-   SECRET_KEY=your-secret-key
    ```
 4. **Run the API**
    ```bash
@@ -61,8 +67,6 @@ zus-api-deployment/
    docker run -p 8000:8000 \
      -e OPENAI_API_KEY=your-key \
      -e PINECONE_API_KEY=your-key \
-     -e PINECONE_ENVIRONMENT=your-env \
-     -e SECRET_KEY=your-secret \
      zus-api
    ```
 
@@ -74,10 +78,7 @@ zus-api-deployment/
 ## 🔑 Environment Variables
 - `OPENAI_API_KEY` (required)
 - `PINECONE_API_KEY` (required)
-- `PINECONE_ENVIRONMENT` (required)
-- `SECRET_KEY` (required)
 - `CORS_ORIGINS` (optional, default: `*`)
-- `LOG_LEVEL` (optional, default: `INFO`)
 
 ## 🛠️ API Endpoints
 - `GET /api/v1/health` — Health check
