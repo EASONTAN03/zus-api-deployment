@@ -1,8 +1,9 @@
 services:
   - type: web
-    name: zus-coffee-chatbot
+    name: zus-api-chatbot
     env: docker
-    plan: free
+    repo: https://github.com/EASONTAN03/zus-api-deployment
+    branch: main
     dockerfilePath: ./Dockerfile
     autoDeploy: true
     healthCheckPath: /api/v1/health
