@@ -21,17 +21,3 @@ services:
         value: "*"
       - key: PYTHONPATH
         value: /app
-      - key: LOG_LEVEL
-        value: INFO
-      - key: SECRET_KEY
-        sync: false
-      - key: ALGORITHM
-        value: HS256
-      - key: PINECONE_ENVIRONMENT
-        sync: false
-      - key: CORS_ORIGINS
-        value: "*"
-      - key: PYTHONPATH
-        value: /app
-      - key: LOG_LEVEL
-        value: INFO

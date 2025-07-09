@@ -22,6 +22,9 @@ ENV PIP_NO_CACHE_DIR=1
 ENV PIP_DISABLE_PIP_VERSION_CHECK=1
 ENV PYTHONPATH=/app
 
+# Copy requirements.txt first (so Docker can cache it)
+COPY requirements.txt .
+
 # Install Python dependencies as non-root user
 RUN pip install --no-cache-dir --user -r requirements.txt
 
