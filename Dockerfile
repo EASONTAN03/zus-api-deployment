@@ -51,4 +51,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
     CMD curl -f http://localhost:$PORT/api/v1/health || exit 1
 
 # Run the application with gunicorn for production
-CMD exec gunicorn app.app:app --bind 0.0.0.0:$PORT --workers 1 --worker-class uvicorn.workers.UvicornWorker --timeout 120 --keep-alive 2 
+CMD ["uvicorn", "app.app:app", "--host=0.0.0.0", "--port=8000"]

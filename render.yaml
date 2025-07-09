@@ -11,12 +11,6 @@ services:
         sync: false
       - key: PINECONE_API_KEY
         sync: false
-      - key: SECRET_KEY
-        sync: false
-      - key: ALGORITHM
-        value: HS256
-      - key: PINECONE_ENVIRONMENT
-        sync: false
       - key: CORS_ORIGINS
         value: "*"
       - key: PYTHONPATH
