@@ -5,10 +5,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 import uvicorn
 from src.utils import setup_logging
-from fastapi.responses import JSONResponse
-from datetime import datetime, timedelta
-import jwt
-from src.rate_limit import pwd_context, load_users, save_users
 
 # Load environment variables
 load_dotenv()
@@ -51,13 +47,6 @@ outlet_write_query_chain = None
 outlet_summary_chain = None
 pinecone_index = None
 outlets_sql_db = None
-
-# Utility to create JWT
-def create_access_token(data: dict, expires_delta: timedelta = None):
-    to_encode = data.copy()
-    expire = datetime.utcnow() + (expires_delta or timedelta(minutes=15))
-    to_encode.update({"exp": expire})
-    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
 @app.on_event("startup")
 async def startup_event():
@@ -112,27 +101,6 @@ async def root():
 # Include router
 from src.router import router
 app.include_router(router, prefix="/api/v1")
-
-# Registration endpoint
-@app.post("/register")
-def register(username: str = Form(...), password: str = Form(...)):
-    users = load_users()
-    if username in users:
-        raise HTTPException(status_code=400, detail="Username already exists")
-    hashed_pw = pwd_context.hash(password)
-    users[username] = {"username": username, "hashed_password": hashed_pw}
-    save_users(users)
-    return JSONResponse(content={"msg": "Registration successful"})
-
-# Login route
-@app.post("/login")
-def login(username: str = Form(...), password: str = Form(...)):
-    users = load_users()
-    user = users.get(username)
-    if not user or not pwd_context.verify(password, user["hashed_password"]):
-        raise HTTPException(status_code=401, detail="Invalid credentials")
-    token = create_access_token(data={"sub": username})
-    return JSONResponse(content={"access_token": token, "token_type": "bearer"})
 
 if __name__ == "__main__":
     # Get port from environment variable (for Render)

@@ -255,9 +255,3 @@ def login(username: str = Form(...), password: str = Form(...)):
         raise HTTPException(status_code=401, detail="Invalid credentials")
     token = create_access_token(data={"sub": username})
     return JSONResponse(content={"access_token": token, "token_type": "bearer"})
-
-@router.post("/token")
-def generate_token(username: str = Form(...)):
-    """Generate a JWT for a given username (for testing/curl usage)."""
-    token = create_access_token(data={"sub": username})
-    return JSONResponse(content={"access_token": token, "token_type": "bearer"})
