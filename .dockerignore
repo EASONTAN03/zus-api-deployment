@@ -2,27 +2,11 @@
 .git
 .gitignore
 
-# Python
-__pycache__
-*.pyc
-*.pyo
-*.pyd
+# Python bytecode & artifacts
+__pycache__/
+*.py[cod]
 .Python
-env
-pip-log.txt
-pip-delete-this-directory.txt
-.tox
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
 *.log
-.git
-.mypy_cache
-.pytest_cache
-.hypothesis
 
 # Virtual environments
 .env
@@ -33,14 +17,25 @@ ENV/
 env.bak/
 venv.bak/
 
-# IDEs
+# Dependency management
+pip-log.txt
+pip-delete-this-directory.txt
+.tox
+.coverage
+.coverage.*
+.cache
+.mypy_cache/
+.pytest_cache/
+.hypothesis/
+
+# IDEs and editors
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 
-# OS
+# OS-specific
 .DS_Store
 .DS_Store?
 ._*
@@ -49,18 +44,16 @@ venv.bak/
 ehthumbs.db
 Thumbs.db
 
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# Data files (will be mounted separately)
+# Jupyter Notebooks
+.ipynb_checkpoints/
 
 # Logs
-*.log
 logs/
+*.log
 
-# Documentation
-README.md
+# Docs
 docs/
+README.md
 
-# New line for .env
+# Explicitly ignore secrets
 .env
