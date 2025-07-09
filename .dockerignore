@@ -53,10 +53,6 @@ Thumbs.db
 .ipynb_checkpoints
 
 # Data files (will be mounted separately)
-data/
-*.csv
-*.db
-*.sql
 
 # Logs
 *.log
