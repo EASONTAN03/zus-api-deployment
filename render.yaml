@@ -4,9 +4,22 @@ services:
     env: docker
     plan: free
     dockerfilePath: ./Dockerfile
+    autoDeploy: true
+    healthCheckPath: /api/v1/health
     envVars:
       - key: OPENAI_API_KEY
         sync: false
       - key: PINECONE_API_KEY
         sync: false
-    healthCheckPath: /api/v1/health
+      - key: SECRET_KEY
+        sync: false
+      - key: ALGORITHM
+        value: HS256
+      - key: PINECONE_ENVIRONMENT
+        sync: false
+      - key: CORS_ORIGINS
+        value: "*"
+      - key: PYTHONPATH
+        value: /app
+      - key: LOG_LEVEL
+        value: INFO
