@@ -69,7 +69,7 @@ async def startup_event():
         product_summary_chain, outlet_write_query_chain, outlet_summary_chain, intent_chain = await initialize_chains()
         
         logger.info("Initializing database...")
-        outlets_sql_db = initialize_database()
+        outlets_sql_db = await initialize_database()
         
         # Set global variables in router
         from src.router import set_global_variables

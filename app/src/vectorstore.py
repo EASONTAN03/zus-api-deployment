@@ -24,7 +24,6 @@ async def initialize_vectorstore():
         
         # Initialize Pinecone
         pinecone_api_key = os.getenv("PINECONE_API_KEY")
-        pinecone_env = pinecone_config.get("environment", "gcp-starter")
         index_name = pinecone_config.get("index_name", "zus-products")
         
         if not pinecone_api_key:
@@ -83,7 +82,6 @@ async def populate_pinecone_index():
     try:
         # Prepare data for Pinecone
         vectors = []
-        metadata_list = []
         
         for i, product in enumerate(product_data):
             # Create text representation of product

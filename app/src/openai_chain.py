@@ -1,5 +1,4 @@
 import os
-import json
 import logging
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import PromptTemplate
@@ -102,34 +101,6 @@ Provide a clear, helpful response that directly addresses the user's question.
     except Exception as e:
         logger.error(f"Error initializing LangChain components: {e}")
         raise
-
-def create_product_chain():
-    """Create a product query chain"""
-    prompt = PromptTemplate.from_template(
-        """
-You are a helpful assistant for ZUS Coffee products. Answer the user's question about products.
-
-Question: {question}
-
-Provide a helpful and accurate response.
-"""
-    )
-    
-    return prompt | llm | StrOutputParser()
-
-def create_outlet_chain():
-    """Create an outlet query chain"""
-    prompt = PromptTemplate.from_template(
-        """
-You are a helpful assistant for ZUS Coffee outlets. Answer the user's question about outlets.
-
-Question: {question}
-
-Provide a helpful and accurate response.
-"""
-    )
-    
-    return prompt | llm | StrOutputParser()
 
 def create_intent_classification_chain():
     """Create an intent classification chain"""

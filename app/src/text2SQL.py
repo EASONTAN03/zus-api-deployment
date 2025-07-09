@@ -9,6 +9,27 @@ logger = logging.getLogger(__name__)
 
 config = load_config()
 
+
+async def initialize_database():
+    """Initialize the SQL database connection, creating from CSV if missing, using config.json filepaths."""
+    try:
+        filepaths = config.get("filepaths", {})
+        outlets_config = filepaths.get("outlets", {})
+        csv_path = outlets_config.get("csv", "data/zus_outlets_final.csv")
+        sql_path = outlets_config.get("sql", "data/zus_outlets.sql")
+        db_path = outlets_config.get("db", "data/zus_outlets.db")
+
+        create_outlet_db_from_csv(db_path, csv_path, sql_path, table_name="outlets")
+        engine = create_engine(f"sqlite:///{db_path}")
+        with engine.connect() as conn:
+            conn.execute(text("SELECT 1"))
+        logger.info("Database connection established successfully")
+        return engine
+    except Exception as e:
+        logger.error(f"Error initializing database: {e}")
+        raise
+
+
 def execute_sql_query(state: Dict[str, Any], db_engine) -> Dict[str, Any]:
     """Execute SQL query and return results"""
     try:
@@ -26,19 +47,6 @@ def execute_sql_query(state: Dict[str, Any], db_engine) -> Dict[str, Any]:
         logger.error(f"Error executing SQL query: {e}")
         state["result"] = []
         return state
-
-def load_outlet_data(csv_path: str) -> list:
-    """Load outlet data from CSV file"""
-    try:
-        if os.path.exists(csv_path):
-            df = pd.read_csv(csv_path)
-            return df.to_dict('records')
-        else:
-            logger.warning(f"Outlet data file not found: {csv_path}")
-            return []
-    except Exception as e:
-        logger.error(f"Error loading outlet data: {e}")
-        return []
     
 def is_db_empty(db_path: str) -> bool:
     """Check if a SQLite database is missing or contains no tables using SQLAlchemy."""
@@ -119,22 +127,3 @@ def create_outlet_db_from_csv(db_path: str, csv_path: str, sql_path: str = None,
 
     else:
         logger.info(f"Database {db_path} already exists.")
-
-def initialize_database():
-    """Initialize the SQL database connection, creating from CSV if missing, using config.json filepaths."""
-    try:
-        filepaths = config.get("filepaths", {})
-        outlets_config = filepaths.get("outlets", {})
-        csv_path = outlets_config.get("csv", "data/zus_outlets_final.csv")
-        sql_path = outlets_config.get("sql", "data/zus_outlets.sql")
-        db_path = outlets_config.get("db", "data/zus_outlets.db")
-
-        create_outlet_db_from_csv(db_path, csv_path, sql_path, table_name="outlets")
-        engine = create_engine(f"sqlite:///{db_path}")
-        with engine.connect() as conn:
-            conn.execute(text("SELECT 1"))
-        logger.info("Database connection established successfully")
-        return engine
-    except Exception as e:
-        logger.error(f"Error initializing database: {e}")
-        raise

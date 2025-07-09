@@ -202,7 +202,7 @@ async def chat_endpoint(
                 chat_cache[prompt] = response
                 return response
             elif intent_type == "outlet":
-                response = get_outlets(prompt)
+                response = await get_outlets(prompt)
                 chat_cache[prompt] = response
                 return response
             else:
@@ -212,7 +212,7 @@ async def chat_endpoint(
             chat_cache[prompt] = response
             return response
         elif intent == "outlet":
-            response = get_outlets(prompt)
+            response = await get_outlets(prompt)
             chat_cache[prompt] = response
             return response
         else:
