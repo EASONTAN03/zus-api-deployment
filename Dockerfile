@@ -18,4 +18,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY app/ ./app
 
 # Set default run command
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]app
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
